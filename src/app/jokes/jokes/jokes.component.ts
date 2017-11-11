@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { JokesService } from '../jokes.service';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/fromEvent';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/throttleTime';
+
 
 @Component({
   selector: 'app-jokes',
@@ -12,12 +16,14 @@ import { Observable } from 'rxjs/Observable';
 
 export class JokesComponent implements OnInit {
 
-  joke$: Observable<string>;
-  constructor(private jokes: JokesService) {}
+  joke: Promise<string>;
 
-  ngOnInit() {}
+    constructor(private jokes: JokesService) {}
 
-  getRandomJoke() {
-    this.joke$ = this.jokes.getRandom();
+    ngOnInit() {}
+
+
+    getRandomJoke() {
+      this.joke = this.jokes.getRandom();
+    }
   }
-}
