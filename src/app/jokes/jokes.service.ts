@@ -8,8 +8,9 @@ export class JokesService {
 
   constructor(private http: Http) { }
 
-  getRandom() {
+  getRandom(): Observable<string> {
     return this.http.get('http://api.icndb.com/jokes/random')
-      .map((res) => res.json());
+      .map((res: Response) => res.json())
+      .map((res) => res.value.joke);        
   }
 }
